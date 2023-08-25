@@ -24,7 +24,8 @@ Below are some reference links - and helper scripts/aliases will be soon to foll
 #### add submodule and define the master branch as the one you want to track
 ```
 # add submodule and define the master branch as the one you want to track
-git submodule add -b master [URL to Git repo] 
+git submodule add -b develop <[URL to Git repo]>
+# git submodule add -b develop <[URL to Git repo]> # do this _only_ on master branch
 git submodule init 
 ```
 
