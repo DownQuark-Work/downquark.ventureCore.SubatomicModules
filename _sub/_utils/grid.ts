@@ -334,7 +334,7 @@ const debugDisplayAsGrid = (showIndex=0,showFullIndex=0) => {
     if(showIndex)
       debugDisplayAsGridString += showFullIndex ? `[${i}]` : (''+i).slice(-1)+' '
     else
-      debugDisplayAsGridString += `[${_GridUtils._CELLS[i]}]`
+      debugDisplayAsGridString += `${_GridUtils._CELLS[i]}`
     if(((i+1)%_GridUtils.DIMENSIONS.W) === 0)
       debugDisplayAsGridString += '\n'
   }
