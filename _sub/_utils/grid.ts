@@ -201,7 +201,7 @@ const setCells:any = (cellSetter:{location:OneOrMany<cellLocationType>,value:One
       _GridUtils._CELLS[cI] = Array.isArray(value) ? value[indx] : value
     }
   })
-  return
+  return _GridUtils._CELLS
 }
 
 const getSubGridIndexes:GetSubGridIndexesInterface = (topLeft,bottomRight) => {
