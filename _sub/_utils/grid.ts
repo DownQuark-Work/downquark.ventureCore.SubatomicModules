@@ -353,7 +353,7 @@ export const UtilsGrid = {
       Perimiter: () => _GridUtils.PERIMETER,
       Position: getCurrentPosition,
     },
-    Render: () => debugDisplayAsGrid(), // remove ability to adjust args
+    Render: (showIndex=0,showFullIndex=0) => debugDisplayAsGrid(showIndex,showFullIndex), // remove ability to adjust args
     Set: {
       Cells: setCells,
       Position: setCurrentPosition,
