@@ -21,12 +21,74 @@ Below are some reference links - and helper scripts/aliases will be soon to foll
 
 > From the repo that will be importing the submodule, do the following:
 ---
-#### add submodule and define the master branch as the one you want to track
+## add submodule and define the branch you want to track:
+> Below is what I've found after trial and error - allows specifying different branches as directories within the same parent directory.
+
+`git submodule add -f -b <SUBMODULE_BRANCH> <SUBMODULE_REPOSITORY_URL> "<LOCAL_DEVELOPMENT_INSTALL_PATH>"`
+
+Then, for sanity:
+
+`git submodule init`
+
+<details><summary>View Process Output</summary>
+
+`git submodule add -f -b feature/generators/prng https://github.com/DownQuark-Work/downquark.ventureCore.SubatomicModules.git "modules/subquark-prng"`
+> Cloning into '/Users/mlnck/Development/_dq/dq/downquark.applicationFoss.GuiTui/modules/subquark-prng'...
+
+_.gitmodules_
 ```
-# add submodule and define the master branch as the one you want to track
-git submodule add -b develop <[URL to Git repo]>
-# git submodule add -b develop <[URL to Git repo]> # do this _only_ on master branch
-git submodule init 
+[submodule "modules/subquark-prng"]
+	path = modules/subquark-prng
+	url = https://github.com/DownQuark-Work/downquark.ventureCore.SubatomicModules.git
+	branch = feature/generators/prng
+```
+
+`git submodule add -f -b develop https://github.com/DownQuark-Work/downquark.ventureCore.SubatomicModules.git "modules/subquark-develop"`
+> Cloning into '/Users/mlnck/Development/_dq/dq/downquark.applicationFoss.GuiTui/modules/subquark-develop'...
+
+_.gitmodules_
+```
+[submodule "modules/subquark-prng"]
+	path = modules/subquark-prng
+	url = https://github.com/DownQuark-Work/downquark.ventureCore.SubatomicModules.git
+	branch = feature/generators/prng
+[submodule "modules/subquark-develop"]
+	path = modules/subquark-develop
+	url = https://github.com/DownQuark-Work/downquark.ventureCore.SubatomicModules.git
+	branch = develop
+```
+
+`git submodule add -f -b develop https://github.com/DownQuark-Work/downquark.ventureCore.SubatomicModules.git "modules/subquark-main"`
+> Cloning into '/Users/mlnck/Development/_dq/dq/downquark.applicationFoss.GuiTui/modules/subquark-main'...
+
+_.gitmodules_
+```
+[submodule "modules/subquark-prng"]
+	path = modules/subquark-prng
+	url = https://github.com/DownQuark-Work/downquark.ventureCore.SubatomicModules.git
+	branch = feature/generators/prng
+[submodule "modules/subquark-develop"]
+	path = modules/subquark-develop
+	url = https://github.com/DownQuark-Work/downquark.ventureCore.SubatomicModules.git
+	branch = develop
+[submodule "modules/subquark-main"]
+	path = modules/subquark-main
+	url = https://github.com/DownQuark-Work/downquark.ventureCore.SubatomicModules.git
+	branch = develop
+```
+
+</details>
+
+### To Remove all Submodules:
+> NOTE: if having issues ensure the following directory is empty:
+> _.git/modules_
+>  **AND** that the submodule listings have been removed from:
+> _.git/config_
+```
+% rm -rf <SUBMODULES_DIRECTORY> && mkdir <SUBMODULES_DIRECTORY>
+% rm .gitmodules
+% rm -rf .git/modules/*
+% # manually remove listings from: .git/config
 ```
 
 ```
@@ -35,7 +97,6 @@ git submodule init
 git submodule update --remote
 ```
 ---
-
 
 1. Cloning a repository that contains submodules
 If you want to clone a repository including its submodules you can use the --recursive parameter.

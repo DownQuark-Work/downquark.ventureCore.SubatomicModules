@@ -1,1 +1,3 @@
 algorithm submodules
+> anything contained within this directory that requires the use of an >1 dimensional array will be dependent on `../_utils/array.grid.ts` 
+> be sure to manage your `import`s accordingly

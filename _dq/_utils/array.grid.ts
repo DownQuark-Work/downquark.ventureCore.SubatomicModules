@@ -1,61 +1,4 @@
-// types
-type OneOrMany<T> = T | T[];
-type cellCoordArrayType = [number,number]
-type cellCoordObjectType = { X?:number, Y?:number }
-type cellCoordType = cellCoordArrayType | cellCoordObjectType
-type cellIndexType = number
-type cellLocationType = cellCoordType | cellIndexType
-type subCellCoordObjectType = { X:number, Y:number }
-
-type adjacentCellsObjectType = {[k in GRID_DIRECTIONS as string]:number}
-type CurrentPositionType = {
-  _i:number,
-  _coord:[number,number],
-  ADJACENT?:adjacentCellsObjectType,
-}
-type GridUtilsType = {
-  _CELLS:Array<unknown>,
-  INDEXES:number[],
-  COLUMNS:number,
-  DIMENSIONS?: {
-    ARRAY:cellCoordArrayType,
-    H:number,
-    TOTAL_INDEX_LENGTH:number,
-    W:number,
-  }
-  PERIMETER:number[],
-  ROWS:number,
-}
-
-type SetCellsReturnType = ReturnType<typeof getCells>
-interface SetCellsInterface {
-  (location:cellLocationType,value:any):SetCellsReturnType // ([col,row],'Z')
-  (location:subCellCoordObjectType,value:any):SetCellsReturnType // ({X:col,Y:row},'A')
-  (location:number,value:any):SetCellsReturnType // (index,'i')
-  (location:cellLocationType[],value:any):SetCellsReturnType // ([[col,row],[col,row]],'Z')
-  (location:subCellCoordObjectType[],value:any):SetCellsReturnType // ([{X:col,Y:row},{X:col,Y:row}],'A')
-  (location:number,loc:number,value:any):SetCellsReturnType // (index,index,'i')
-  // (topLeft:any,bottomRight:any):SetCellsReturnType // (index,index)
-}
-type SetCurrentPositionReturnType = ReturnType<typeof getCurrentPosition>
-interface SetCurrentPositionInterface {
-  (movement:cellCoordType):SetCurrentPositionReturnType // pass in [x,y] or {X,Y} - go to x,y
-  (movement:GRID_DIRECTIONS, distance?:number):SetCurrentPositionReturnType // pass in direction and amount of cells to translate
-  (movement:number):SetCurrentPositionReturnType // pass in index - go to index
-}
-type CreateConsistentBoundsReturnType = {index:number[],coord:cellCoordArrayType[]}
-interface CreateConsistentBoundsInterface {
-  (topLeft:cellCoordArrayType,bottomRight:cellCoordArrayType):CreateConsistentBoundsReturnType // ([col,row],[col,row])
-  (topLeft:subCellCoordObjectType,bottomRight:subCellCoordObjectType):CreateConsistentBoundsReturnType // ({X:col,Y:row},{X:col,Y:row})
-  (topLeft:number,bottomRight:number):CreateConsistentBoundsReturnType // (index,index)
-  (topLeft:any,bottomRight:any):CreateConsistentBoundsReturnType // (index,index)
-}
-type GetSubGridIndexesReturnType = {subGridIndexes:number[], subGridPerimeter:{applied:number[],isolated:number[]}}
-interface GetSubGridIndexesInterface {
-  (topLeft:cellCoordArrayType,bottomRight:cellCoordArrayType):GetSubGridIndexesReturnType // ([col,row],[col,row])
-  (topLeft:subCellCoordObjectType,bottomRight:subCellCoordObjectType):GetSubGridIndexesReturnType // ({X:col,Y:row},{X:col,Y:row})
-  (topLeft:number,bottomRight:number):GetSubGridIndexesReturnType // (index,index)
-}
+import * as ArrayGridType from '../../typings/_utils/array-grid.d.ts'
 
 export enum GRID_DIRECTIONS {
   N = 'N', E = 'E',
@@ -75,7 +18,7 @@ const _GRID_DEFAULTS:{[k:string]:any} = {
 }
 
 // variables
-const _GridUtils:GridUtilsType = {
+const _GridUtils:ArrayGridType.GridUtilsType = {
   _CELLS:[],
   INDEXES:[],
   COLUMNS:0,
@@ -83,27 +26,27 @@ const _GridUtils:GridUtilsType = {
   ROWS:0,
 }
 
-const _CURRENT_POSITION:CurrentPositionType = { // main pointer for traversal/observation/mutation
+const _CURRENT_POSITION:ArrayGridType.CurrentPositionType = { // main pointer for traversal/observation/mutation
   _i:0,
   _coord:[0,0],
 }
 
 // methods
-const coordsAsArray = (coords:cellCoordType) => {
+const coordsAsArray = (coords:ArrayGridType.cellCoordType) => {
   if(Array.isArray(coords)) return coords // if as-is if an array
   const curCoords:[number,number] = [..._CURRENT_POSITION._coord]
-  const coordObj = coords as cellCoordObjectType // if not, it is an object with optional X,Y values
+  const coordObj = coords as ArrayGridType.cellCoordObjectType // if not, it is an object with optional X,Y values
   if(coordObj.X) curCoords[0] = coordObj.X
   if(coordObj.Y) curCoords[1] = coordObj.Y
   return curCoords
 }
   // translations
-  const parseCoordFromIndex = (index?:number):cellCoordArrayType => {
+  const parseCoordFromIndex = (index?:number):ArrayGridType.cellCoordArrayType => {
     if(!_GridUtils.DIMENSIONS) return [0,0]
     const indexedCell = index || _CURRENT_POSITION._i
     return [indexedCell % _GridUtils.DIMENSIONS.W, Math.floor(indexedCell / _GridUtils.DIMENSIONS.W)]
   }
-const parseIndexFromCoord = (coord?:cellCoordArrayType) => {
+const parseIndexFromCoord = (coord?:ArrayGridType.cellCoordArrayType) => {
   if(!_GridUtils.DIMENSIONS) return 0
   const cellToIndex = coord || _CURRENT_POSITION._coord
   return (cellToIndex[1] * _GridUtils.DIMENSIONS.W) + cellToIndex[0] // (amtCellsInRow * numRows) + numCols
@@ -119,7 +62,7 @@ const updatePosition = (dir:GRID_DIRECTIONS,distance=1) => {
 }
 
   // observations
-const createConsistentBounds:CreateConsistentBoundsInterface = (tl,br) => {
+const createConsistentBounds:ArrayGridType.CreateConsistentBoundsInterface = (tl,br) => {
   return [tl,br].reduce((a:any,c) => {
     // this parses and returns both the index and coordinates of the sub-area corners
     if(typeof c === 'number') {
@@ -164,7 +107,7 @@ const fillGrid = (arrLen:number=_GridUtils._CELLS.length,filler?:unknown,asIndex
  * > NOTE: A concious decision was made to omit the ability to parse anything
  * > other than index values and coordinates the get/set cell functions.
  */
-const getCells = (cellGetter?:{location:OneOrMany<cellLocationType>,returnIndexes?:boolean}) => {
+const getCells = (cellGetter?:{location:OneOrMany<ArrayGridType.cellLocationType>,returnIndexes?:boolean}) => {
   if(!cellGetter?.location) // if not specified, return all
   return _GridUtils._CELLS
   
@@ -182,10 +125,10 @@ const getCells = (cellGetter?:{location:OneOrMany<cellLocationType>,returnIndexe
         if(typeof location[0] === 'number') // array of indexes
           return location.map(c => retCell(c as number))
         // else an array of [[x,y]] or [{x,y}]
-        return location.map(loc => retCell(parseIndexFromCoord(coordsAsArray(loc as cellCoordType))))
+        return location.map(loc => retCell(parseIndexFromCoord(coordsAsArray(loc as ArrayGridType.cellCoordType))))
     }
 }
-const setCells:any = (cellSetter:{location:OneOrMany<cellLocationType>,value:OneOrMany<unknown>}) => {
+const setCells:any = (cellSetter:{location:OneOrMany<ArrayGridType.cellLocationType>,value:OneOrMany<unknown>}) => {
   const {location,value} = cellSetter
   if(!location) { // if no location specified
     if(Array.isArray(value)) // and value is an array
@@ -204,8 +147,8 @@ const setCells:any = (cellSetter:{location:OneOrMany<cellLocationType>,value:One
   return _GridUtils._CELLS
 }
 
-const getSubGridIndexes:GetSubGridIndexesInterface = (topLeft,bottomRight) => {
-  const boundaries:CreateConsistentBoundsReturnType = createConsistentBounds(topLeft,bottomRight) 
+const getSubGridIndexes:ArrayGridType.GetSubGridIndexesInterface = (topLeft,bottomRight) => {
+  const boundaries:ArrayGridType.CreateConsistentBoundsReturnType = createConsistentBounds(topLeft,bottomRight) 
   const subH = Math.abs(boundaries.coord[0][1] - boundaries.coord[1][1]),
         subW = Math.abs(boundaries.coord[0][0] - boundaries.coord[1][0]) + 1 // +1 makes inclusive
   const subGridIndexes:number[] = [],
@@ -228,7 +171,7 @@ const getSubGridIndexes:GetSubGridIndexesInterface = (topLeft,bottomRight) => {
 const getCurrentPosition = () => { // future scalability?
   return _CURRENT_POSITION
 }
-const setCurrentPosition:SetCurrentPositionInterface = (movement,distance:number=1) => {
+const setCurrentPosition:ArrayGridType.SetCurrentPositionInterface = (movement,distance:number=1) => {
   switch (typeof movement) {
     case 'object': // coordinates
         _CURRENT_POSITION._coord = coordsAsArray(movement)
@@ -256,7 +199,7 @@ const setCurrentPosition:SetCurrentPositionInterface = (movement,distance:number
  *   indexes are valid values
  */
 const determineCurPositionAdjacentCells = () => {
-  const adjacentCellIds:adjacentCellsObjectType = {}
+  const adjacentCellIds:ArrayGridType.adjacentCellsObjectType = {}
   for(const gD in GRID_DIRECTIONS)
     adjacentCellIds[gD] = _GridUtils.DIMENSIONS ? updatePosition(gD as GRID_DIRECTIONS) : 0
   return adjacentCellIds
@@ -360,3 +303,6 @@ export const UtilsGrid = {
     }
   }
 }
+
+export type GetCellsType = typeof getCells
+export type GetCurrentPositionType = typeof getCurrentPosition
