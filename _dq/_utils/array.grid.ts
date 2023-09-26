@@ -1,4 +1,5 @@
 import * as ArrayGridType from '../../typings/_utils/array-grid.d.ts'
+import { OneOrMany } from '../../typings/common.d.ts'
 
 export enum GRID_DIRECTIONS {
   N = 'N', E = 'E',
