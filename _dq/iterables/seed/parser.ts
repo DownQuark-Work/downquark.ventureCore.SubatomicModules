@@ -1,4 +1,4 @@
-import {PARSE_RANDOM} from '../_constants.ts';
+import {PARSE_RANDOM} from '¢/iterables.seed.ts';
 
 import type { SeedPointerType } from './pointer.ts';
 

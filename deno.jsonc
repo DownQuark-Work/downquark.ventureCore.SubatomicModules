@@ -1,4 +1,12 @@
 {
+  "imports": {
+    "@/":"./_dq/",
+    "†/":"./typings/",
+    "∂":"./_dq/_deps/_deno.ts",
+    "¢/":"./_dq/_utils/constants/",
+    "»/":"./_dq/_run/",
+    "std/": "https://deno.land/std@0.202.0/"
+  },
   "compilerOptions": {
     "types": [
       "./typings/*.ts",

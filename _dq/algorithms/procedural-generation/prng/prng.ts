@@ -1,6 +1,6 @@
-import { crypto, encodeHex, type DigestAlgorithm } from './_deps.ts'
+import { crypto, encodeHex, type DigestAlgorithm } from '∂'
 
-import { SeedConfigType } from './_utils/seed/pseudo-seed.ts'
+import { SeedConfigType } from '»/prng.seed.ts'
 
 declare global {
   interface String {

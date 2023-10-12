@@ -1,12 +1,8 @@
-import * as ArrayGridType from '../../typings/_utils/array-grid.d.ts'
-import { OneOrMany } from '../../typings/common.d.ts'
+import { parse } from '∂'
 
-export enum GRID_DIRECTIONS {
-  N = 'N', E = 'E',
-  S = 'S', W = 'W',
-  NE = 'NE', NW = 'NW',
-  SE = 'SE', SW = 'SW',
-}
+import * as ArrayGridType from '†/_utils/array-grid.d.ts'
+import { OneOrMany } from '†/common.d.ts'
+import { GRID_DIRECTIONS } from '¢/iterables.array.grid.ts'
 
 const _GRID_DEFAULTS:{[k:string]:any} = {
   FILL_CHARACTER:0, // if nullish (??) the index value will be rendered
@@ -285,7 +281,7 @@ const debugDisplayAsGrid = (showIndex=0,showFullIndex=0) => {
   console.log(debugDisplayAsGridString)
 }
 
-export const UtilsGrid = {
+export const ArrayGrid = { // was UtilsGrid - update where applicable
   Grid: {
     Create: {
       Config: CONFIG,
@@ -303,6 +299,22 @@ export const UtilsGrid = {
       Position: setCurrentPosition,
     }
   }
+}
+
+// Deno CLI
+/// Proofs: see `/examples/readme.md` for usage notes
+const parsedArgs = parse(Deno.args)
+if(!!Deno.args[0]){
+  if(!(parsedArgs.w && parsedArgs.h)) { // width && height required
+    console.log('ERROR: Argument `-w` and `-h` required')
+    Deno.exit(1)
+  }
+  const grid:unknown[] = ArrayGrid.Grid.Create.Initial(parsedArgs.w,parsedArgs.h) || [],
+        position:ArrayGridType.CurrentPositionType = ArrayGrid.Grid.Get.Position(),
+        cells:unknown[] = ArrayGrid.Grid.Get.Cells() || [],
+        perimeter:number[] = ArrayGrid.Grid.Get.Perimiter(),
+        arrayGrid = JSON.stringify({grid, position, cells,perimeter,})
+  console.log(arrayGrid) // capture stdout to use in other functions/methods
 }
 
 export type GetCellsType = typeof getCells

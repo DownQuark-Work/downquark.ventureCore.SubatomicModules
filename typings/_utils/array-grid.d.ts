@@ -1,4 +1,5 @@
-import { GetCellsType, GetCurrentPositionType, GRID_DIRECTIONS} from '../../_dq/_utils/array.grid.ts'
+import { GetCellsType, GetCurrentPositionType } from '»/array.grid.ts'
+import { GRID_DIRECTIONS } from '¢/iterables.array.grid.ts'
 
 export type cellCoordArrayType = [number,number]
 export type cellCoordObjectType = { X?:number, Y?:number }
