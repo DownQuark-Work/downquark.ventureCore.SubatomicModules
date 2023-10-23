@@ -4,7 +4,12 @@ _This is a work in progress._
 
 The envisioned end result is that through this `examples` directory you will find examples and use cases relating to running the submodules found within this repo.
 
+The files and scripts run from here are not intended to be exhaustive, or even cover all basic methods available. They are to be used more as a reference to sping up _quick start_ process. There will be an attempt to ensure each example covers both a basic `module` and `CLI` implementation.
 
+> NOTE: To keep the source files clean the `example` part of the `CLI` implementation will handle the _"return value"_ \(I know) of the script as it is called directly from the command line.
+> > e.g.: `% deno run iterables/array/grid.cli.ts $(deno run ../_dq/_run/array.grid.ts -w 42 -h 13)` is the equivalent of
+> > running the submodule script directly: `% deno run ../_dq/_run/array.grid.ts -w 42 -h 13`
+> > then running the example file: `% deno run iterables/array/grid.cli.ts` using the output of the submodule script as `arg[0]`
 
 ## Array
 ### CLI

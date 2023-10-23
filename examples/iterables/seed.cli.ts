@@ -1,5 +1,5 @@
-import * as Parser from '@/iterables/seed/parser.ts' // '@/algorithms/procedural-generation/prng/_utils/seed/parser.ts'
-import * as Pointer from '@/iterables/seed/pointer.ts' //  '@/algorithms/procedural-generation/prng/_utils/seed/pointer.ts';
+import * as Parser from '@/iterables/seed/parser.ts'
+import * as Pointer from '@/iterables/seed/pointer.ts'
 
 console.log('handling raw output from `/_dq/_run/prng.seed.ts`')
 const pseudoSeed = JSON.parse(Deno.args[0])
