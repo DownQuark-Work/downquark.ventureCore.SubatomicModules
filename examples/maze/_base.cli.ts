@@ -31,7 +31,7 @@ await Game.initGame(gameConfig)
 
 const {curPointer} = Game.Seed?.Seeded() as {curPointer:{seedIndex:number}}
 
-console.clear()
+// console.clear()
 Game.Grid.Render()
 
 

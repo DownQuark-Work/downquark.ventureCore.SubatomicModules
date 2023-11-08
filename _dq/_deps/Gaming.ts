@@ -38,7 +38,8 @@ export const initGame = async (cnfg:any) => {
     // the length of the width and height must be odd for carved grids
     if(!cnfg.Grid.GRID_HEIGHT.isOdd()) --cnfg.Grid.GRID_HEIGHT
     if(!cnfg.Grid.GRID_WIDTH.isOdd()) --cnfg.Grid.GRID_WIDTH
-    cnfg.Grid.FILL_CHARACTER = MAZE.CELL.COMMON.UNVISITED // set all cells to unvisited
+    cnfg.Grid.FILL_CHARACTER = MAZE.CELL.DEBUG.BASE // set all cells to be basic
+    
   }
 
   // create grid
