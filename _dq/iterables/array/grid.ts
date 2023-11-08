@@ -223,7 +223,7 @@ const determineGridPerimeter = (fullGridArray?:{rowLen:number,totalIndexAmt:numb
 
 let _pristineConfig = true
 const CONFIG = (defaults:Partial<typeof _GRID_DEFAULTS>) => {
-  if(!_pristineConfig) throw new Error('CONFIG is only allowed to be updated a single time, before calling InitGrid.')
+  // if(!_pristineConfig) throw new Error('CONFIG is only allowed to be updated a single time, before calling InitGrid.')
   _pristineConfig = false
   const INIT_POSITION = { ..._GRID_DEFAULTS.INIT_POSITION, ...defaults.INIT_POSITION}
   const compiledConfig = {
