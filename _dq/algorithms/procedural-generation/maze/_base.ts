@@ -5,13 +5,18 @@ const _Maze:{
     perimeter:number[]
     width:number
   },
+  Bordered:{Initial:number[]},
   Carved:{Initial:number[]},
 } = {
   BaseGrid: {cells:[],height:0,perimeter:[],width:0},
-  Carved:{Initial:[]}
+  Bordered:{Initial:[]},
+  Carved:{Initial:[]},
 }
 
-const createMazeBaseCarved = () => {
+const createMazeBaseBordered = () => {
+  _Maze.Bordered.Initial = [..._Maze.BaseGrid.cells] // clone array for future usage
+},
+createMazeBaseCarved = () => {
   // create new array of non-perimeter indexes
     // splice top and bottom rows for efficiency
   let initialBaseCarvedIndexes = _Maze.BaseGrid.cells.toSpliced(_Maze.BaseGrid.perimeter[0]-_Maze.BaseGrid.width,_Maze.BaseGrid.perimeter[0])
@@ -23,10 +28,7 @@ const createMazeBaseCarved = () => {
         initialBaseCarvedIndexes.splice(rawIndex-(_Maze.BaseGrid.width+1)-2,3)
       }
     }
-
-  console.log('initialBaseCarvedIndexes: ', initialBaseCarvedIndexes)//.reverse())//.join(''))
   _Maze.Carved.Initial = initialBaseCarvedIndexes
-  
 },
 setGridInfo = (gridInfo: typeof _Maze.BaseGrid) => {
   _Maze.BaseGrid = gridInfo
@@ -35,12 +37,14 @@ setGridInfo = (gridInfo: typeof _Maze.BaseGrid) => {
 export const Maze = { // was UtilsGrid - update where applicable
   Create: {
     Initial: {
-      Carved: createMazeBaseCarved
+      Bordered: createMazeBaseBordered,
+      Carved: createMazeBaseCarved,
     },
   },
   Get: {
     Initial: {
-      Carved:() => _Maze.Carved.Initial
+      Bordered:() => _Maze.Bordered.Initial,
+      Carved:() => _Maze.Carved.Initial,
     }
   },
   Set: {

@@ -31,3 +31,16 @@ deno run iterables/seed.cli.ts $(deno run ../_dq/_run/prng.seed.ts 230 --seed 13
 ```
 ### module
 `% deno run iterables/seed.mod.ts`
+
+## Maze
+> Opinionated for `Gaming`.
+> > Incorporates **PRNG & Seed** by default.
+### CLI
+> _carved_ maze by default
+```bash
+deno run maze/_base.cli.ts -w 30 -h 15
+```
+### module
+> _bordered_ maze by default
+> > assumes [caddy](https://www.caddyserver.com) is installed
+`% deno run --allow-write maze/_base.mod.ts -w 30 -h 15 --export-path 'maze/_html' && open http://0.0.0.0:1313/maze/_html/base.bordered.html && caddy file-server --listen :1313`

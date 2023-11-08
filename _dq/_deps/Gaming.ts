@@ -13,6 +13,8 @@ export type { SeedConfigType } from '»/prng.seed.ts'
 
 // Maze
 import { Maze } from '@/algorithms/procedural-generation/maze/_base.ts'
+import { InitMazeType } from '@/algorithms/procedural-generation/maze/base.type.ts'
+import { ApplySeededAlgorithm } from '@/algorithms/procedural-generation/maze/base.algorithm.ts'
 
 let SeededValue = {}
 export const Seed = {
@@ -22,12 +24,14 @@ export const Seed = {
 }
 
 import { MAZE_CELL as CELL } from '¢/maze.cell.ts'
-import { MAZE_ALGORITHM as ALGORITHM } from '../_utils/constants/maze.algorithm.ts'
+import { MAZE_ALGORITHM as ALGORITHM } from '¢/maze.algorithm.ts'
 export const MAZE = { ALGORITHM, CELL }
 
 export const initGame = async (cnfg:any) => {
   // store for use
-  const baseMazeType = cnfg.Maze?.algorithm?.base,
+  const baseMazeFormula = cnfg.Maze?.algorithm?.formula,
+        baseMazeType = cnfg.Maze?.algorithm?.base,
+        baseMazeTypeIsBordered = baseMazeType === ALGORITHM._BASE.BORDERED,
         baseMazeTypeIsCarved = baseMazeType === ALGORITHM._BASE.CARVED
   
   if(baseMazeTypeIsCarved) {
@@ -36,40 +40,27 @@ export const initGame = async (cnfg:any) => {
     if(!cnfg.Grid.GRID_WIDTH.isOdd()) --cnfg.Grid.GRID_WIDTH
     cnfg.Grid.FILL_CHARACTER = MAZE.CELL.COMMON.UNVISITED // set all cells to unvisited
   }
-// console.log('cnfg.Grid: ', cnfg.Grid)
+
   // create grid
   Grid.Create.Config(cnfg.Grid)
   Grid.Create.Initial()
 
+  // TODO: MOVE SEEDED TO NEW FILE IF/WHEN APPROPRIATE
   // create prng w/ seed
   const pseudoSeed = await Seed.Create(cnfg.Seed)
   // register pointer
   const curPointer = Pointer.registerSeedPointer('_BASE_SEED_POINTER')
   SeededValue = {...pseudoSeed,curPointer} // allows access to pointer from outside this file
 
-  if(baseMazeType) {
-    // clone and store index
-    const cellIndexes = Object.keys(Grid.Get.Cells() as Array<unknown>).map(k => parseInt(k,10))
-    Maze.Set.MutableGridValues({
-        cells:[...cellIndexes],
-        height: cnfg.Grid.GRID_HEIGHT,
-        perimeter:[...Grid.Get.Perimiter()],
-        width: cnfg.Grid.GRID_WIDTH,
-      })
-
-    if(baseMazeTypeIsCarved) { // if carved base type then configure inital grid
-      Maze.Create.Initial.Carved() // create initial maze
-      const initialCarved = Maze.Get.Initial.Carved(),
-            everyOther = initialCarved.filter((_crv,indx) => indx.isOdd()), // store odd indexes
-            perim = Grid.Get.Perimiter(), // store outer perimeter
-            adjacentPerim = [...new Set(perim.reduce((a:number[],c:number)=> {
-              a.push(c+1,c-1,c+cnfg.Grid.GRID_WIDTH,c-cnfg.Grid.GRID_WIDTH)
-              return a // store cells adjacent to outer perimeter
-            },[]))]
-      Grid.Set.Cells({location:everyOther,value:MAZE.CELL.CARVED.PASSAGE}) // all odd indexed cells are a valid passage
-      Grid.Set.Cells({location:adjacentPerim,value:MAZE.CELL.COMMON.UNVISITED}) // all cells adjacent to the perimeter are unvisited
-      Grid.Set.Cells({location:perim,value:MAZE.CELL.COMMON.PERIMETER}) // perimeter cells take priority and overwrite any overlap from the above
-    }
+  if(baseMazeType) { // type is required
+    InitMazeType({
+      cnfg,
+      baseMazeTypeIsBordered, baseMazeTypeIsCarved,
+      Grid, Maze
+    })
+  }
+  if(baseMazeFormula) { // formula is required
+    ApplySeededAlgorithm('TODO')
   }
 
 return Promise.resolve()

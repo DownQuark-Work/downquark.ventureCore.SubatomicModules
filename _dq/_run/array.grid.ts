@@ -16,7 +16,8 @@ if(!!Deno.args[0]){
         cells:unknown[] = arrGrid.Grid.Get.Cells() || [],
         perimeter:number[] = arrGrid.Grid.Get.Perimiter(),
         arrayGrid = JSON.stringify({grid, position, cells,perimeter,})
-  console.log(arrayGrid) // capture stdout to use in other functions/methods
+
+  if(parsedArgs['export-grid']) console.log(arrayGrid) // capture stdout to use in other functions/methods
 }
 
 export const ArrayGrid = arrGrid

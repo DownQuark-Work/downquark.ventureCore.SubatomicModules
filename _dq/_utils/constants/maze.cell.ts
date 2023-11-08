@@ -31,6 +31,17 @@ enum MAZE_CELL_TYPES_DEBUG {
   PATH = '◘',
 }
 
+enum MAZE_CELL_TYPES_CANVAS { // maps symbols to colors
+  '◆' = 'rgba(0,125,125,.6)', // VISITED
+  '◇' = 'rgba(125,0,125,.4)', // UNVISITED
+  '○' = 'rgba(50,205,50,1)', // ENTRANCE
+  '✪' = 'rgba(50,50,205,1)', // EXIT
+  '⤣' = 'rgba(50,150,150,1)', // UP
+  '⤥' = 'rgba(50,50,50,1)', // DOWN
+  '⥁' = 'rgba(125,0,125,1)', // QUEUED
+  '⨳' = 'rgba(0,0,0,.8)', // PERIMETER
+}
+
 /** The `MAZE_CELL_TYPES_BORDERED_INDEX_DIRECTION_MAP` enum
  *  corresponds to which sides of the cell have a border:
  * > e.g.:
@@ -81,6 +92,7 @@ for(let mCT in MAZE_CELL_TYPES) {
   CELL[mCT] = MAZE_CELL_TYPES_KEY_TO_ENUM_MAP[mCT as keyof typeof MAZE_CELL_TYPES_KEY_TO_ENUM_MAP]
 }
 CELL.BORDERED.INDEX = MAZE_CELL_TYPES_BORDERED_INDEX_DIRECTION_MAP
+CELL.BORDERED.SYMBOL_TO_COLOR_MAP = MAZE_CELL_TYPES_CANVAS
 
-console.log('CELL: ', CELL)
+// console.log('CELL: ', CELL)
 export const MAZE_CELL = CELL

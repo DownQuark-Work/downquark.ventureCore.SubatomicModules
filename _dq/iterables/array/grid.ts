@@ -2,6 +2,7 @@ import { OneOrMany } from '†/common.d.ts'
 import { GRID_DIRECTIONS } from '¢/iterables.array.grid.ts'
 
 import * as ArrayGridType from '†/_utils/array-grid.d.ts'
+import { MAZE_CELL } from '¢/maze.cell.ts';
 
 const _GRID_DEFAULTS:{[k:string]:any} = {
   FILL_CHARACTER:0, // if nullish (??) the index value will be rendered
@@ -124,6 +125,28 @@ const getCells = (cellGetter?:{location:OneOrMany<ArrayGridType.cellLocationType
         return location.map(loc => retCell(parseIndexFromCoord(coordsAsArray(loc as ArrayGridType.cellCoordType))))
     }
 }
+const exportCells = (exportAs:'json'|'toml'='json',exportTo='./') => {
+    const fileName = '_grid.base'
+    let content = '{}'
+    switch(exportAs){
+      case 'toml':
+        content = JSON.stringify({coming:'soon'}) // coming soon
+        break
+      default:
+        content = JSON.stringify({
+          _GRID_DEFAULTS,
+          MAZE_CELL,
+          indexes:_GridUtils._CELLS,
+          perimeter:_GridUtils.PERIMETER,
+        })
+    }
+    try {
+      Deno.writeTextFileSync(exportTo+'/'+fileName+'.'+exportAs, JSON.stringify(content));
+    } catch (e) {
+      console.error(e.message)
+      return
+    }
+}
 const setCells:any = (cellSetter:{location:OneOrMany<ArrayGridType.cellLocationType>,value:OneOrMany<unknown>}) => {
   const {location,value} = cellSetter
   if(!location) { // if no location specified
@@ -145,8 +168,6 @@ const setCells:any = (cellSetter:{location:OneOrMany<ArrayGridType.cellLocationT
 
 const getSubGridIndexes:ArrayGridType.GetSubGridIndexesInterface = (topLeft,bottomRight) => {
   const subGridBoundaries:ArrayGridType.CreateConsistentBoundsReturnType = createConsistentBounds(topLeft,bottomRight) 
-  console.log('topLeft,bottomRight: ', topLeft,bottomRight)
-  console.log('subGridBoundaries: ', subGridBoundaries)
   const subH = Math.abs(subGridBoundaries.coord[0][1] - subGridBoundaries.coord[1][1]),
         subW = Math.abs(subGridBoundaries.coord[0][0] - subGridBoundaries.coord[1][0]) + 1, // +1 makes inclusive
         subGridDimensions = {w:subW, h:subH+1}
@@ -289,6 +310,10 @@ export const ArrayGrid = { // was UtilsGrid - update where applicable
       Config: CONFIG,
       Initial: InitGrid,
       SubGrid: getSubGridIndexes,
+    },
+    Export: {
+      JSON: (exportTo:string) => exportCells('json',exportTo),
+      TOML: (exportTo:string) => exportCells('toml',exportTo), // coming soon
     },
     Get: {
       Cells: getCells,

@@ -1,4 +1,3 @@
-// deno run ./maze/base.ts -w 30 -h 15   
 import { parse } from '∂'
 import * as Game from '¿/Gaming.ts'
 
@@ -12,7 +11,7 @@ if(!!Deno.args[0]){
 
 // configurations should be outside of `Gaming` to allow customizations for each use
 const gridConfig = {
-        FILL_CHARACTER:Game.MAZE.CELL.COMMON.BASE,
+        FILL_CHARACTER:Game.MAZE.CELL.COMMON.UNVISITED,
         GRID_HEIGHT:parsedArgs.h as number,GRID_WIDTH:parsedArgs.w as number
       },
       seedConfig:Game.SeedConfigType = {
@@ -20,7 +19,8 @@ const gridConfig = {
       },
       mazeConfig = {
         algorithm: {
-          base: Game.MAZE.ALGORITHM._BASE.CARVED,
+          base: Game.MAZE.ALGORITHM._BASE.BORDERED,
+          // base: Game.MAZE.ALGORITHM._BASE.CARVED,
           formula: Game.MAZE.ALGORITHM.SIDEWINDER,
         }
       },
@@ -32,8 +32,7 @@ await Game.initGame(gameConfig)
 
 const {curPointer} = Game.Seed?.Seeded() as {curPointer:{seedIndex:number}}
 
-console.clear()
-Game.Grid.Render()
+Game.Grid.Export.JSON(parsedArgs['export-path'])
 
 
 
