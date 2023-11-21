@@ -11,6 +11,15 @@ The files and scripts run from here are not intended to be exhaustive, or even c
 > > running the submodule script directly: `% deno run ../_dq/_run/array.grid.ts -w 42 -h 13`
 > > then running the example file: `% deno run iterables/array/grid.cli.ts` using the output of the submodule script as `arg[0]`
 
+## API
+### NPM
+> Currently only `CLI` is supported
+```bash
+  deno run --allow-net api/npm.ts --pkg qonsole -- pkgStatsDownloaded
+  deno run --allow-net api/npm.ts --pkg chalk -- pkgStatsDownloaded
+  deno run --allow-net api/npm.ts --pkg @vue/shared -- pkgStatsDownloaded
+```
+
 ## Array
 ### CLI
 > NOTE: configuration options are currently not supported using `CLI`
@@ -20,7 +29,6 @@ deno run iterables/array/grid.cli.ts $(deno run ../_dq/_run/array.grid.ts -w 13 
 ```
 ### module
 `% deno run iterables/array/grid.mod.ts`
-
 
 ## PRNG & Seed
 ### CLI
