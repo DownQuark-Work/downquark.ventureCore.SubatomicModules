@@ -13,7 +13,7 @@ export type SeedConfigType = {
 }
 
 // handles access via CLI
-if(!!Deno.args[0]){
+if(!!Deno.args[0]) {
 const parsedArgs = parse(Deno.args)
 const {parsedSeed:seed, seed:shaSeed, v3b:v3bArray, DEMO:boolean} = parsedArgs
 const v3b = v3bArray ? v3bArray.split(',').map((v3:string) => parseInt(v3,10)) : undefined
@@ -23,9 +23,12 @@ const pseudoSeedConfig:SeedConfigType = {
   seed,
   v3b
 }
-// See `/examples/readme.md` for usage notes
-const pseudoSeed = await PsuedoSeed(pseudoSeedConfig)
-console.log(JSON.stringify(pseudoSeed))
+const containsValidArgs = Object.values(pseudoSeedConfig).reduce((a,c) =>a||!!c,false)
+if(containsValidArgs) { // if no valid args then chances are this will be called from a `module` file
+  // See `/examples/readme.md` for usage notes
+  const pseudoSeed = await PsuedoSeed(pseudoSeedConfig)
+  console.log(JSON.stringify(pseudoSeed))
+}
 }
 
 // handles access via module

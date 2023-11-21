@@ -7,8 +7,8 @@ export type SeedPointerType = {
   seedIndex: number,
   _seedIndex: number,
   choose: (options:string|{RANGE:[number,number]}|unknown[]) => unknown,
-  dec: (indexVal:boolean) => number,
-  inc: (indexVal:boolean) => number,
+  dec: (indexVal?:boolean) => number,
+  inc: (indexVal?:boolean) => number,
   setPointer: (pointerPosition:number) => number,
 }
 
@@ -33,8 +33,8 @@ else pointerName = '_BASE_SEED_POINTER' // force name for initial seed pointer
     seedIndex: currentSeedPointerIndex,
     _seedIndex: currentSeedPointerIndex,
     choose: (options:any) => Parse.parseOptionWithSeedValue(options),
-    dec: (indexVal:boolean) => Parse.parseSeedAtPos(-1,indexVal),
-    inc: (indexVal:boolean) => Parse.parseSeedAtPos(1,indexVal),
+    dec: (indexVal?:boolean) => Parse.parseSeedAtPos(-1,indexVal),
+    inc: (indexVal?:boolean) => Parse.parseSeedAtPos(1,indexVal),
   }
   
   // allows index pointer to be incremented each time `seedPointer.seedIndex` is accessed

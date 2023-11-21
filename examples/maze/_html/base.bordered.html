@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Base Border Maze</title>
+  <style>#debug{display:none;}</style>
+</head>
+
+<body>
+  <code id="debug"></code>
+  <canvas id="maze" style="background: #e2e2e2; margin:20px" />
+</body>
+<script>
+  // load grid
+  let GRID = 'loading ...'
+  async function loadGrid(){
+    GRID = await fetch('_grid.base.json', {
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    })
+      .then(resp => resp.json())
+      .then(parsed => {
+        document.getElementById('debug').innerText = parsed
+        return JSON.parse(parsed)
+      })
+      .catch(function(err) { console.error('err: ', err)});
+  }
+  loadGrid()
+</script>
+
+<script>
+  // config canvas
+  const cellSize = 20,
+        maze = document.getElementById('maze'),
+        mazeCntxt = maze.getContext('2d')
+  const placeCells = () => {
+    GRID.indexes.forEach((cell,indx) => {
+      const x = indx % GRID._GRID_DEFAULTS.GRID_WIDTH,
+            y = Math.floor(indx/GRID._GRID_DEFAULTS.GRID_WIDTH)
+
+      mazeCntxt.fillStyle = GRID.MAZE_CELL.BORDERED.SYMBOL_TO_COLOR_MAP[cell]
+      mazeCntxt.fillRect(x*cellSize,y*cellSize,cellSize,cellSize)
+      mazeCntxt.strokeRect(x*cellSize,y*cellSize,cellSize,cellSize)
+    });
+  }
+  setTimeout(()=>{
+    maze.setAttribute('height',GRID._GRID_DEFAULTS.GRID_HEIGHT*cellSize)
+    maze.setAttribute('width',GRID._GRID_DEFAULTS.GRID_WIDTH*cellSize)
+    placeCells()
+  },10) // required to allow GRID to populate
+</script>
+</html>

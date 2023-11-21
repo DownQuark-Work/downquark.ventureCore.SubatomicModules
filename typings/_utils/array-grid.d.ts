@@ -1,4 +1,4 @@
-import { GetCellsType, GetCurrentPositionType } from '»/array.grid.ts'
+import { GetCellsType, GetCurrentPositionType } from '@/iterables/array/grid.ts'
 import { GRID_DIRECTIONS } from '¢/iterables.array.grid.ts'
 
 export type cellCoordArrayType = [number,number]
@@ -51,7 +51,7 @@ export interface CreateConsistentBoundsInterface {
   (topLeft:number,bottomRight:number):CreateConsistentBoundsReturnType // (index,index)
   (topLeft:any,bottomRight:any):CreateConsistentBoundsReturnType // (index,index)
 }
-export type GetSubGridIndexesReturnType = {subGridIndexes:number[], subGridPerimeter:{applied:number[],isolated:number[]}}
+export type GetSubGridIndexesReturnType = {subGridDimensions:{w:number,h:number}, subGridIndexes:number[], subGridPerimeter:{applied:number[],isolated:number[]}}
 export interface GetSubGridIndexesInterface {
   (topLeft:cellCoordArrayType,bottomRight:cellCoordArrayType):GetSubGridIndexesReturnType // ([col,row],[col,row])
   (topLeft:subCellCoordObjectType,bottomRight:subCellCoordObjectType):GetSubGridIndexesReturnType // ({X:col,Y:row},{X:col,Y:row})

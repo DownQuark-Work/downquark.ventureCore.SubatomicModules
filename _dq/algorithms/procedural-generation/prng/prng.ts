@@ -8,6 +8,9 @@ declare global {
     raw?: string;
     numerical?: string;
   }
+  interface Number {
+    isOdd:() => boolean
+  }
 }
 
 let _seedConfig:Partial<SeedConfigType> = {}
