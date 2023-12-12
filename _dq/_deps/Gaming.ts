@@ -14,7 +14,7 @@ export type { SeedConfigType } from '»/prng.seed.ts'
 // Maze
 import { Maze } from '@/algorithms/procedural-generation/maze/_base.ts'
 import { InitMazeType } from '@/algorithms/procedural-generation/maze/base.type.ts'
-import { ApplySeededAlgorithm } from '@/algorithms/procedural-generation/maze/base.algorithm.ts'
+import { APPLY_ALGORITHM } from '@/algorithms/procedural-generation/maze/base.algorithm.ts'
 
 let SeededValue = {}
 export const Seed = {
@@ -28,6 +28,7 @@ import { MAZE_ALGORITHM as ALGORITHM } from '¢/maze.algorithm.ts'
 export const MAZE = { ALGORITHM, CELL }
 
 export const initGame = async (cnfg:any) => {
+  // console.log('cnfg: ', cnfg)
   // store for use
   const baseMazeFormula = cnfg.Maze?.algorithm?.formula,
         baseMazeType = cnfg.Maze?.algorithm?.base,
@@ -35,10 +36,13 @@ export const initGame = async (cnfg:any) => {
         baseMazeTypeIsCarved = baseMazeType === ALGORITHM._BASE.CARVED
   
   if(baseMazeTypeIsCarved) {
+    // console.log('baseMazeFormula: ', baseMazeFormula)
     // the length of the width and height must be odd for carved grids
     if(!cnfg.Grid.GRID_HEIGHT.isOdd()) --cnfg.Grid.GRID_HEIGHT
     if(!cnfg.Grid.GRID_WIDTH.isOdd()) --cnfg.Grid.GRID_WIDTH
-    cnfg.Grid.FILL_CHARACTER = MAZE.CELL.DEBUG.BASE // set all cells to be basic
+    cnfg.Grid.FILL_CHARACTER = baseMazeFormula._name === ALGORITHM.SIDEWINDER
+      ? MAZE.CELL.CARVED.SOLID // handle sidewinder as a one-off
+      : MAZE.CELL.DEBUG.BASE // default set all cells to be basic
     
   }
 
@@ -53,16 +57,14 @@ export const initGame = async (cnfg:any) => {
   const curPointer = Pointer.registerSeedPointer('_BASE_SEED_POINTER')
   SeededValue = {...pseudoSeed,curPointer} // allows access to pointer from outside this file
 
-  if(baseMazeType) { // type is required
-    InitMazeType({
+  baseMazeType // type is required
+    && InitMazeType({
       cnfg,
       baseMazeTypeIsBordered, baseMazeTypeIsCarved,
       Grid, Maze
     })
-  }
-  if(baseMazeFormula) { // formula is required
-    ApplySeededAlgorithm('TODO')
-  }
+  baseMazeFormula._name // formula is required
+    && (APPLY_ALGORITHM[baseMazeFormula._name] as Function)({cnfg,Grid, Maze})
 
 return Promise.resolve()
 }

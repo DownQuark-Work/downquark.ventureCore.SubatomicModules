@@ -1,5 +1,5 @@
 export const PARSE_RANDOM = {
-  BOOL: ['TRUE','FALSE'],
+  BOOL: [true,false],
   DIR: [''],
   DIRECTION_THREE_DIMENAIONAL:[''],
   DIRECTION_CARDINAL:['NORTH','SOUTH','EAST','WEST'],

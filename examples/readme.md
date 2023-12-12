@@ -46,9 +46,16 @@ deno run iterables/seed.cli.ts $(deno run ../_dq/_run/prng.seed.ts 230 --seed 13
 ### CLI
 > _carved_ maze by default
 ```bash
-deno run maze/_base.cli.ts -w 30 -h 15
+deno run maze/_base._config.ts -w 30 -h 15 --anim 20 -- cli carved sidewinder 
+deno run maze/_base._config.ts -w 30 -h 15 --anim 20 --seeded 131342 -- cli carved sidewinder 
+deno run maze/_base._config.ts -w 30 -h 15 -- cli carved sidewinder
+deno run maze/_base._config.ts -w 30 -h 15 --seeded 131342 -- cli carved sidewinder
+deno run maze/_base._config.ts -w 30 -h 15 --seeded 00088d38-0e39-4acd-a1b8-2af94d8911cf -- cli carved sidewinder
 ```
 ### module
-> _bordered_ maze by default
+> animation does not exist for module
 > > assumes [caddy](https://www.caddyserver.com) is installed
-`% deno run --allow-write maze/_base.mod.ts -w 30 -h 15 --export-path 'maze/_html' && open http://0.0.0.0:1313/maze/_html/base.bordered.html && caddy file-server --listen :1313`
+`% deno run --allow-write maze/_base._config.ts -w 30 -h 15 --export-path 'maze/_html' -- mod carved sidewinder && open http://0.0.0.0:1313/maze/_html/base.bordered.html && caddy file-server --listen :1313`
+`% deno run --allow-write maze/_base._config.ts -w 30 -h 15 --export-path 'maze/_html' --seeded 131342 -- mod carved sidewinder && open http://0.0.0.0:1313/maze/_html/base.bordered.html && caddy file-server --listen :1313`
+`% deno run --allow-write maze/_base._config.ts -w 30 -h 15 --export-path 'maze/_html' --seeded cf40b6a8-aa1a-47db-95e5-b3388b98f86d -- mod carved sidewinder && open http://0.0.0.0:1313/maze/_html/base.bordered.html && caddy file-server --listen :1313`
+`% deno run --allow-write maze/_base._config.ts -w 30 -h 15 --export-path 'maze/_html' --seeded 00088d38-0e39-4acd-a1b8-2af94d8911cf -- mod carved sidewinder && open http://0.0.0.0:1313/maze/_html/base.bordered.html && caddy file-server --listen :1313`

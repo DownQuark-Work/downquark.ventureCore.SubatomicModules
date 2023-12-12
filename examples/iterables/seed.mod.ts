@@ -1,3 +1,4 @@
+// this is the original (and more stable) implementation
 import * as Parser from '@/iterables/seed/parser.ts'
 import * as Pointer from '@/iterables/seed/pointer.ts'
 import { createPseudoSeed } from '»/prng.seed.ts';

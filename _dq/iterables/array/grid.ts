@@ -125,7 +125,7 @@ const getCells = (cellGetter?:{location:OneOrMany<ArrayGridType.cellLocationType
         return location.map(loc => retCell(parseIndexFromCoord(coordsAsArray(loc as ArrayGridType.cellCoordType))))
     }
 }
-const exportCells = (exportAs:'json'|'toml'='json',exportTo='./') => {
+const exportCells = (exportAs:'json'|'toml'='json',exportTo?:string) => {
     const fileName = '_grid.base'
     let content = '{}'
     switch(exportAs){
@@ -139,6 +139,10 @@ const exportCells = (exportAs:'json'|'toml'='json',exportTo='./') => {
           indexes:_GridUtils._CELLS,
           perimeter:_GridUtils.PERIMETER,
         })
+    }
+    if(!exportTo) {
+      console.log(content)
+      return content
     }
     try {
       Deno.writeTextFileSync(exportTo+'/'+fileName+'.'+exportAs, JSON.stringify(content));
@@ -312,8 +316,8 @@ export const ArrayGrid = { // was UtilsGrid - update where applicable
       SubGrid: getSubGridIndexes,
     },
     Export: {
-      JSON: (exportTo:string) => exportCells('json',exportTo),
-      TOML: (exportTo:string) => exportCells('toml',exportTo), // coming soon
+      JSON: (exportTo?:string) => exportCells('json',exportTo),
+      TOML: (exportTo?:string) => exportCells('toml',exportTo), // coming soon
     },
     Get: {
       Cells: getCells,

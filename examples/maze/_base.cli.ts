@@ -1,42 +1,21 @@
-import { parse } from '∂'
-import * as Game from '¿/Gaming.ts'
+import { Grid, Seed } from '¿/Gaming.ts'
+let Game:any, curPointer:any, grid:any;
 
-const parsedArgs = parse(Deno.args)
-if(!!Deno.args[0]){
-  if(!(parsedArgs.w && parsedArgs.h)) { // width && height required
-    console.log('ERROR: Argument `-w` and `-h` required')
-    Deno.exit(1)
-  }
+const poc = () => {
+  console.clear()
+  Grid.Render()
+  console.log('\n\trendered from: _base.cli.ts')
+  console.log('\n\t\twith seed: ',Seed.Seeded().shaSeed)
+}
+export const initCli = (stringifiedMazeJSON:string) => {
+  console.clear()
+  console.log('CLI :: stringifiedMazeJSON: ', stringifiedMazeJSON)
+  poc()
 }
 
-// configurations should be outside of `Gaming` to allow customizations for each use
-const gridConfig = {
-        FILL_CHARACTER:Game.MAZE.CELL.COMMON.BASE,
-        GRID_HEIGHT:parsedArgs.h as number,GRID_WIDTH:parsedArgs.w as number
-      },
-      seedConfig:Game.SeedConfigType = {
-        requiredLength:parsedArgs.w * parsedArgs.h*1.25, // shaSeed:'13',
-      },
-      mazeConfig = {
-        algorithm: {
-          base: Game.MAZE.ALGORITHM._BASE.CARVED,
-          formula: Game.MAZE.ALGORITHM.SIDEWINDER,
-        }
-      },
-      gameConfig = {
-        Grid:gridConfig, Maze:mazeConfig, Seed:seedConfig
-      }
-await Game.initGame(gameConfig)
-
-
-const {curPointer} = Game.Seed?.Seeded() as {curPointer:{seedIndex:number}}
-
-// console.clear()
-Game.Grid.Render()
-
-
-
-if(false){ // debug
+function debug(override=false) {
+if(override){ // debug
+  console.clear()
   console.log('._Seed: ', ''._Seed)
   console.log('-=-=-=-=-=--=-');
   console.log('curPointer: ', curPointer)
@@ -52,3 +31,4 @@ if(false){ // debug
     console.log('opt selection: ',Game.Seed.Parser.parseOptionWithSeedValue('BOOL'))
     console.log('opt selection: ',Game.Seed.Parser.parseOptionWithSeedValue('DIR'))
   }
+}

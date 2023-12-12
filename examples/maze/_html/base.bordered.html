@@ -22,6 +22,7 @@
     })
       .then(resp => resp.json())
       .then(parsed => {
+        console.log('parsed: ', typeof(parsed))
         document.getElementById('debug').innerText = parsed
         return JSON.parse(parsed)
       })
@@ -36,11 +37,14 @@
         maze = document.getElementById('maze'),
         mazeCntxt = maze.getContext('2d')
   const placeCells = () => {
+    console.log('GRID: ', typeof GRID)
+    console.log('GRID: ', GRID)
     GRID.indexes.forEach((cell,indx) => {
       const x = indx % GRID._GRID_DEFAULTS.GRID_WIDTH,
             y = Math.floor(indx/GRID._GRID_DEFAULTS.GRID_WIDTH)
-
-      mazeCntxt.fillStyle = GRID.MAZE_CELL.BORDERED.SYMBOL_TO_COLOR_MAP[cell]
+      console.log('cell: ', cell)
+            console.log('GRID.MAZE_CELL.BORDERED.SYMBOL_TO_COLOR_MAP[cell]: ', GRID.MAZE_CELL.BORDERED.SYMBOL_TO_COLOR_MAP[cell])
+      mazeCntxt.fillStyle = GRID.MAZE_CELL.BORDERED.SYMBOL_TO_COLOR_MAP[cell] || 'rgba(255,255,255,1)'
       mazeCntxt.fillRect(x*cellSize,y*cellSize,cellSize,cellSize)
       mazeCntxt.strokeRect(x*cellSize,y*cellSize,cellSize,cellSize)
     });
@@ -49,6 +53,6 @@
     maze.setAttribute('height',GRID._GRID_DEFAULTS.GRID_HEIGHT*cellSize)
     maze.setAttribute('width',GRID._GRID_DEFAULTS.GRID_WIDTH*cellSize)
     placeCells()
-  },10) // required to allow GRID to populate
+  },1000) // required to allow GRID to populate
 </script>
 </html>
