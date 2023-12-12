@@ -3,7 +3,6 @@ DownQuark Created Projects (or locally forked repos) to be used as submodules th
 
 ---
 ## Branches
-This repository should have _**only**_ two branches.
 1. `main` will be references by _only_ the`main` branch of any repository 
 1.  _All_ other sub-modules should reference `develop`
 
@@ -118,6 +117,15 @@ If you want to clone a repository including its submodules you can use the --rec
 > `git submodule sync`
 > `git submodule update --init --recursive`
 --
+
+## Update a submodule to the latest commit
+```
+cd <path-to-submodule>
+git pull origin <branch>
+cd <root-of-your-main-project>
+git add <path-to-submodule>
+git commit -m "submodule updated"
+```
 
 ## Delete a submodule from a repository
 Currently Git provides no standard interface to delete a submodule. To remove a submodule called mymodule you need to:

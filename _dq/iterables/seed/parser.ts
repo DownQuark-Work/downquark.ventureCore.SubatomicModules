@@ -22,8 +22,9 @@ export const parseSeedAtPos = (offset:number=CURRENT_POS,indexVal=false,sp?:Seed
   let sI = pointer.seedIndex
   if(!''._Seed?.length) return sI+=offset
   if(offset) sI+=offset
-  if(sI<0) sI = ''._Seed!.length-1
-  if(sI>=''._Seed!.length) sI = 0
+  if(sI<0) {sI = ''._Seed!.length-1; pointer.seedIndex = sI}
+  if(sI>=''._Seed!.length) {sI = 0; pointer.seedIndex = sI}
+  
   if(indexVal) return sI // return index of current pointer
   return parseInt(''._Seed.at(sI),10) // return value of seeded string at current pointer index
 }
