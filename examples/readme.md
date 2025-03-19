@@ -59,3 +59,11 @@ deno run maze/_base._config.ts -w 30 -h 15 --seeded 00088d38-0e39-4acd-a1b8-2af9
 `% deno run --allow-write maze/_base._config.ts -w 30 -h 15 --export-path 'maze/_html' --seeded 131342 -- mod carved sidewinder && open http://0.0.0.0:1313/maze/_html/base.bordered.html && caddy file-server --listen :1313`
 `% deno run --allow-write maze/_base._config.ts -w 30 -h 15 --export-path 'maze/_html' --seeded cf40b6a8-aa1a-47db-95e5-b3388b98f86d -- mod carved sidewinder && open http://0.0.0.0:1313/maze/_html/base.bordered.html && caddy file-server --listen :1313`
 `% deno run --allow-write maze/_base._config.ts -w 30 -h 15 --export-path 'maze/_html' --seeded 00088d38-0e39-4acd-a1b8-2af94d8911cf -- mod carved sidewinder && open http://0.0.0.0:1313/maze/_html/base.bordered.html && caddy file-server --listen :1313`
+
+## Wave Function Collapse
+### CLI
+```bash
+deno run alogrithms/wave-function-collapse.ts -v -w 15 -h 15 --seeded 131342 --anim 40
+deno run alogrithms/wave-function-collapse.ts -w 15 -h 13 --anim 40
+deno run alogrithms/wave-function-collapse.ts -w 15 -h 13
+```
