@@ -1,0 +1,34 @@
+@import "../_namespace/dq.mock-my-db.css" layer(dq);
+@layer utilities, mock-my-db;
+
+
+@layer mock-my-db {
+  @layer cnvs, inpt-src, mock-dfn;
+  /* middle section, left section, right section */
+}
+
+/* block at-rules
+  @layer dq {rules}
+  @layer {rules}
+  @layer dq.mock-my-db {rules} * /
+@layer mock-my-db { *{border:1px solid blue} }
+@layer dq { *{border:1px solid red;text-decoration:underline} }
+@layer utilities { *{border:1px solid black} }
+/* */
+
+@layer mock-my-db {
+  body.project.dq.mock-my-db {
+    background-color: var(--downquark-color-background-primary);
+    color: var(--downquark-color-text-primary);
+
+    & main {
+      & section {
+        border: 1px solid var(--downquark-color-text-primary);
+        display: inline-block;
+        width: 20vi;
+        &.cnvs { width: 48vi; }
+        &.mock-dfn {width: 30vi;}
+      }
+    }
+  }
+}
