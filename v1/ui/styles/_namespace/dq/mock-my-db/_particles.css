@@ -1,0 +1,16 @@
+/*!* overrides for base design tokens *!*/
+:where(html),:root {
+    /* base colors: https://huemint.com/website-2/#palette=2c2f2f-91beed-37b69b-783397 */
+    --downquark-color-namespace-primary: oklch(78.65% 0.0827 250);
+    --downquark-color-namespace-secondary: oklch(70.09% 0.1164 175.36);
+    --downquark-color-namespace-tertiary: oklch(46.16% 0.1637 313.62);
+
+    --downquark-color-background-primary: oklch(30.22% 0.0042 196.93);
+    --downquark-color-background-accent: var(--downquark-color-background-primary);
+    --downquark-color-background-secondary: var(--downquark-color-background-primary);
+    --downquark-color-text-accent: var(--downquark-color-namespace-secondary);
+    --downquark-color-text-interactive: var(--downquark-color-namespace-tertiary);
+    --downquark-color-text-primary: var(--downquark-color-namespace-primary);
+}
+
+/* project specific design tokens */
