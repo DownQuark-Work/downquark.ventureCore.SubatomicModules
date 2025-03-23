@@ -79,7 +79,7 @@
           block-size: 100%;
           padding: .25rem .5rem;
           overflow: auto;
-          /*resize: horizontal;*/
+          /*resize: inline;*/
           & > * { block-size: 100%; }
           &.cnvs {
             border-inline: 1px solid oklch(0.52 0.09 268.86);
@@ -97,7 +97,7 @@
           inline-size: 100%;
           overflow: auto;
           padding: 0;
-          resize: horizontal;
+          resize: inline;
           &.cnvs {
             inline-size: 50vi;
             max-inline-size:50vi;
