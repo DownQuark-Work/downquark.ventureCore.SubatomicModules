@@ -110,7 +110,6 @@
             inline-size: 100%;
             max-inline-size: 20vi;
             min-inline-size: 10vi;
-            overflow: hidden;
           }
           &.mock-dfn {
             inline-size: 30vi;
@@ -124,7 +123,6 @@
             font-size:larger;
             inline-size: 100%;
             margin: -.25rem 0 0 -.5rem;
-            overflow: hidden;
             padding: 0;
             text-align: center;
             width: calc(100% + 1rem);
