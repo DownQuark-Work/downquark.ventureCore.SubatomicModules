@@ -143,6 +143,9 @@
 
 @layer mock-my-db.inpt-src {
   section.input-src {
+    display: flex;
+    flex-direction: column;
+      justify-content: space-between;
       .package-container {
         display: flex;
         flex-direction: column;
@@ -247,7 +250,15 @@
       }
     }
     .database-scheme-or-structure {
+      align-content: flex-start;
+      display: flex;
+      flex-flow: wrap;
+      height: inherit;
+      line-height: 1.25rem;
       .sql-hl {
+        &::before{
+          content: " ";
+        }
         &.keyword {
           color: var(--downquark-color-brand-secondary);
         }
