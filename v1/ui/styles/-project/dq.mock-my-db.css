@@ -140,3 +140,19 @@
     }
   }
 }
+
+@layer mock-my-db.inpt-src {
+  section.input-src .database-scheme-or-structure {
+    .sql-hl {
+      &.keyword{ color:blue; }
+      &.function{ color:blue; }
+      &.number{ color:blue; }
+      &.string{ color:blue; }
+      &.identifier{ color:blue; }
+      &.special{ color:blue; }
+      &.bracket{ color:blue; }
+      &.comment{ color:var(--downquark-color-base-gray-400); }
+      &.clear{ color:transparent; }
+    }
+  }
+}
