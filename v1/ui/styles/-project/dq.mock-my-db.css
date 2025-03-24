@@ -142,17 +142,93 @@
 }
 
 @layer mock-my-db.inpt-src {
-  section.input-src .database-scheme-or-structure {
-    .sql-hl {
-      &.keyword{ color:var(--downquark-color-brand-secondary); }
-      &.function{ color:var(--downquark-color-brand-tertiary); }
-      &.number{ color:var(--downquark-color-base-orange-200); }
-      &.string{ color:var(--downquark-color-namespace-secondary); }
-      &.identifier{ color:var(--downquark-color-base-cyan-400); }
-      &.special{ color:var(--downquark-color-base-gray-200); }
-      &.bracket{ color:var(--downquark-color-base-magenta-400); }
-      &.comment{ color:var(--downquark-color-base-gray-400); }
-      &.clear{ color:transparent; }
+  section.input-src {
+    /*button.btn-tab-toggle {*/
+      .package-container {
+        display: flex;
+        flex-direction: column;
+        row-gap: 16px;
+        font-family: "Poppins", sans-serif;
+        font-size: small;
+        --primary-color: #1da1f2;
+        --secondary-color: #1da1f2;
+        --tab-text-color: #ffffff;
+      }
+      .package-heading {
+        font-size: 16px;
+        font-weight: 500;
+        color: var(--tab-text-color);
+      }
+      .package-tab-wrapper {
+        display: flex;
+        align-items: center;
+        column-gap: 10px;
+        border-radius: 8px;
+        border: 1px solid var(--primary-color);
+        padding: 8px;
+      }
+      .package-tab-wrapper .input {
+        display: none;
+      }
+      .package-tab {
+        flex-grow: 1;
+        text-align: center;
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-size: 12px;
+        background: var(--tab-text-color);
+        color: var(--secondary-color);
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.5s ease-in-out;
+      }
+      .package-tab:active {
+        transform: scale(0.9);
+      }
+      .input:checked + label.package-tab {
+        background: var(--primary-color);
+        color: var(--tab-text-color);
+        box-shadow: 0px 0px 10px 0px var(--primary-color);
+      /*}*/
+    }
+    .database-scheme-or-structure {
+      .sql-hl {
+        &.keyword {
+          color: var(--downquark-color-brand-secondary);
+        }
+
+        &.function {
+          color: var(--downquark-color-brand-tertiary);
+        }
+
+        &.number {
+          color: var(--downquark-color-base-orange-200);
+        }
+
+        &.string {
+          color: var(--downquark-color-namespace-secondary);
+        }
+
+        &.identifier {
+          color: var(--downquark-color-base-cyan-400);
+        }
+
+        &.special {
+          color: var(--downquark-color-base-gray-200);
+        }
+
+        &.bracket {
+          color: var(--downquark-color-base-magenta-400);
+        }
+
+        &.comment {
+          color: var(--downquark-color-base-gray-400);
+        }
+
+        &.clear {
+          color: transparent;
+        }
+      }
     }
   }
 }
