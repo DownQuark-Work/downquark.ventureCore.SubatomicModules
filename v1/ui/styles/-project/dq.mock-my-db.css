@@ -144,13 +144,13 @@
 @layer mock-my-db.inpt-src {
   section.input-src .database-scheme-or-structure {
     .sql-hl {
-      &.keyword{ color:blue; }
-      &.function{ color:blue; }
-      &.number{ color:blue; }
-      &.string{ color:blue; }
-      &.identifier{ color:blue; }
-      &.special{ color:blue; }
-      &.bracket{ color:blue; }
+      &.keyword{ color:var(--downquark-color-brand-secondary); }
+      &.function{ color:var(--downquark-color-brand-tertiary); }
+      &.number{ color:var(--downquark-color-base-orange-200); }
+      &.string{ color:var(--downquark-color-namespace-secondary); }
+      &.identifier{ color:var(--downquark-color-base-cyan-400); }
+      &.special{ color:var(--downquark-color-base-gray-200); }
+      &.bracket{ color:var(--downquark-color-base-magenta-400); }
       &.comment{ color:var(--downquark-color-base-gray-400); }
       &.clear{ color:transparent; }
     }
