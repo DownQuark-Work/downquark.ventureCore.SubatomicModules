@@ -160,11 +160,13 @@
         text-wrap:pretty;
       }
       .package-tab-wrapper {
-        display: flex;
         align-items: center;
-        column-gap: 10px;
         border-radius: 8px;
+        column-gap: 10px;
+        display: flex;
+        flex-wrap: wrap;
         padding: 8px;
+        row-gap: .5rem;
       }
       .package-tab-wrapper .input {
         display: none;
