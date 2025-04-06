@@ -70,7 +70,7 @@
             max-inline-size:50vi;
             min-inline-size: 20vi;
           }
-          &.input-src {
+          &.define-schema {
             inline-size: 100%;
             max-inline-size: 20vi;
             min-inline-size: 10vi;
