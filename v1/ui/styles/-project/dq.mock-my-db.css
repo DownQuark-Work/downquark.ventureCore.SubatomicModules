@@ -1,19 +1,10 @@
-@import "../_namespace/dq.mock-my-db.css" layer(dq);
 @layer utilities, mock-my-db;
+@import "../_namespace/dq.mock-my-db.css" layer(mock-my-db.atomic);
 
 @layer mock-my-db {
+  @layer atomic;
   @layer cnvs-diagram, inpt-src, mock-dfn;
-  /* middle section, left section, right section */
 }
-
-/* block at-rules
-  @layer dq {rules}
-  @layer {rules}
-  @layer dq.mock-my-db {rules} * /
-@layer mock-my-db { *{border:1px solid blue} }
-@layer dq { *{border:1px solid red;text-decoration:underline} }
-@layer utilities { *{border:1px solid black} }
-/* */
 
 @layer utilities {
   a {
@@ -57,32 +48,6 @@
     background-color: var(--downquark-color-background-primary);
     color: var(--downquark-color-text-primary);
 
-    header {
-      text-align: center;
-      &::after {content:"dq"; line-height: 2rem;}
-      &:hover {
-        &::after {
-          content: "";
-          line-height: unset;
-        }
-        hgroup {
-          display: block;
-        }
-      }
-      hgroup {
-        display: none;
-
-        h1, h2 {
-          margin: 0;
-        }
-
-        h2 {
-          margin-block-end: 1rem;
-          font-size: large;
-        }
-      }
-    }
-
     & main {
       box-sizing: border-box;
       block-size: calc(100vb - 2.25rem);
@@ -110,7 +75,6 @@
             inline-size: 100%;
             max-inline-size: 20vi;
             min-inline-size: 10vi;
-            overflow: hidden;
           }
           &.mock-dfn {
             inline-size: 30vi;
@@ -124,7 +88,6 @@
             font-size:larger;
             inline-size: 100%;
             margin: -.25rem 0 0 -.5rem;
-            overflow: hidden;
             padding: 0;
             text-align: center;
             width: calc(100% + 1rem);
@@ -142,17 +105,105 @@
 }
 
 @layer mock-my-db.inpt-src {
-  section.input-src .database-scheme-or-structure {
-    .sql-hl {
-      &.keyword{ color:var(--downquark-color-brand-secondary); }
-      &.function{ color:var(--downquark-color-brand-tertiary); }
-      &.number{ color:var(--downquark-color-base-orange-200); }
-      &.string{ color:var(--downquark-color-namespace-secondary); }
-      &.identifier{ color:var(--downquark-color-base-cyan-400); }
-      &.special{ color:var(--downquark-color-base-gray-200); }
-      &.bracket{ color:var(--downquark-color-base-magenta-400); }
-      &.comment{ color:var(--downquark-color-base-gray-400); }
-      &.clear{ color:transparent; }
+  section.input-src {
+    display: flex;
+    flex-direction: column;
+      justify-content: space-between;
+      .package-container {
+        display: flex;
+        flex-direction: column;
+        row-gap: 16px;
+        font-family: "Poppins", sans-serif;
+        font-size: small;
+        --primary-color: #1da1f2;
+        --secondary-color: #1da1f2;
+        --tab-text-color: #ffffff;
+      }
+      .package-heading {
+        font-size: 1.125rem;
+        margin:1rem 0 .5rem;
+        padding:.25rem .25rem .25rem 1rem;
+        text-wrap:pretty;
+      }
+      .package-tab-wrapper {
+        align-items: center;
+        border-radius: 8px;
+        column-gap: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        padding: 8px;
+        row-gap: .5rem;
+      }
+      .package-tab-wrapper .input {
+        display: none;
+      }
+      .package-tab {
+        flex-grow: 1;
+        text-align: center;
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-size: 12px;
+        background: var(--tab-text-color);
+        color: var(--secondary-color);
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.5s ease-in-out;
+      }
+      .package-tab:active {
+        transform: scale(0.9);
+      }
+      .input:checked + label.package-tab {
+        background: var(--primary-color);
+        color: var(--tab-text-color);
+        box-shadow: 0 0 10px 0 var(--primary-color);
+    }
+
+    .database-scheme-or-structure {
+      align-content: flex-start;
+      display: flex;
+      flex-flow: wrap;
+      height: inherit;
+      line-height: 1.25rem;
+      .sql-hl {
+        &::before{
+          content: " ";
+        }
+        &.keyword {
+          color: var(--downquark-color-brand-secondary);
+        }
+
+        &.function {
+          color: var(--downquark-color-brand-tertiary);
+        }
+
+        &.number {
+          color: var(--downquark-color-base-orange-200);
+        }
+
+        &.string {
+          color: var(--downquark-color-namespace-secondary);
+        }
+
+        &.identifier {
+          color: var(--downquark-color-base-cyan-400);
+        }
+
+        &.special {
+          color: var(--downquark-color-base-gray-200);
+        }
+
+        &.bracket {
+          color: var(--downquark-color-base-magenta-400);
+        }
+
+        &.comment {
+          color: var(--downquark-color-base-gray-400);
+        }
+
+        &.clear {
+          color: transparent;
+        }
+      }
     }
   }
 }

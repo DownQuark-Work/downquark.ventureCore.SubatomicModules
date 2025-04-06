@@ -1,0 +1,34 @@
+body.project.dq.mock-my-db {
+    header {
+        text-align: center;
+
+        &::after {
+            content: "mock my db";
+            line-height: 2rem;
+        }
+
+        &:hover {
+            &::after {
+                content: "";
+                line-height: unset;
+            }
+
+            hgroup {
+                display: block;
+            }
+        }
+
+        hgroup {
+            display: none;
+
+            h1, h2 {
+                margin: 0;
+            }
+
+            h2 {
+                margin-block-end: 1rem;
+                font-size: large;
+            }
+        }
+    }
+}
